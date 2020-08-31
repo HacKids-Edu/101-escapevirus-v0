@@ -1,30 +1,34 @@
+input.onButtonPressed(Button.A, function () {
+    if (jogadorX > 0) {
+        jogadorX = jogadorX - 1
+    }
+})
+input.onButtonPressed(Button.B, function () {
+    if (jogadorX < 4) {
+        jogadorX = jogadorX + 1
+    }
+})
+let jogadorX = 0
 let covidX = randint(0, 4)
 let covidY = 0
-let jogadorX = randint(0, 4)
+jogadorX = randint(0, 4)
 let jogadorY = 4
-let gameover = 0
+let gameover = false
 basic.forever(function () {
-    while (gameover == 0) {
+    while (!(gameover)) {
         basic.clearScreen()
-        led.plot(covidX, covidY)
         led.plot(jogadorX, jogadorY)
+        led.plot(covidX, covidY)
         if (covidY == 4 && covidX == jogadorX) {
-            gameover = 1
-        }
-        if (input.buttonIsPressed(Button.A) && jogadorX > 0) {
-            jogadorX = jogadorX - 1
-        }
-        if (input.buttonIsPressed(Button.B) && jogadorX < 4) {
-            jogadorX = jogadorX + 1
+            gameover = true
+            basic.clearScreen()
+            basic.showString("GAME OVER")
         }
         covidY = covidY + 1
         if (covidY == 5) {
-            covidX = randint(0, 4)
             covidY = 0
+            covidX = randint(0, 4)
         }
         basic.pause(500)
     }
-    basic.clearScreen()
-    basic.showString("GAME OVER")
-    gameover = 0
 })
